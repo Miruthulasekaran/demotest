@@ -1,0 +1,321 @@
+import Header from 'components/Headers/Header';
+import React, { useState, useEffect, useRef } from 'react'
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
+  Container,
+  Row,
+  Col,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+} from "reactstrap";
+export default function DeviceCategoryAdd() {
+
+  const [updateddevice, setupdateddevice] = useState(true)
+  const [deviceprofile, setdeviceprofile] = useState([])
+  useEffect(() => {
+    fetch("http://192.168.0.138:8088/api/v1/device-profile").then((result) => {
+      result.json().then((resp) => {
+        console.log("response", resp);
+        setdeviceprofile(resp);
+        console.log("device profile response", resp)
+      })
+    })
+  }, [])
+
+  const [devicedataprofile, setdevicedataprofile] = useState([])
+  useEffect(() => {
+    fetch("http://192.168.0.138:8088/api/v1/device-data-profile", {
+
+    }).then((result) => {
+      result.json().then((resp) => {
+        setdevicedataprofile(resp);
+        console.log("device data profile", resp);
+      })
+    })
+  }, [])
+
+  const [alarmrule, setalarmrule] = useState([])
+  useEffect(() => {
+    fetch("http://192.168.0.138:8088/api/v1/alarm-rule", {
+
+    }).then((result) => {
+      result.json().then((resp) => {
+        setalarmrule(resp);
+        console.log("alarm-rule", resp);
+      })
+    })
+  }, [])
+
+  const [imageset, setimage] = useState()
+  let setonChangeImage = (e) => {
+    e.preventDefault();
+    console.log("iconimage", e.target.value)
+    // seticonimg(e.target.file)
+    setimage(URL.createObjectURL(e.target.files[0]))
+  };
+  // onChange={e => setOnDataTypevalue(e.target.value)} 
+  const [Categoryname, setCategoryname] = useState("")
+  const [device, setdevice] = useState("")
+  const [data, setdata] = useState("")
+  const [alarm, setalarm] = useState("")
+  const [Paramvalue, setParamValue] = useState([])
+  const [CreateObject, setCreateObject] = useState([])
+  const [deviceprofileArray, setdeviceprofileArray] = useState([])
+  const [deiveprofileTemp, setdeiveprofileTemp] = useState("")
+  const [createObj, setcreateObj] = useState()
+  const [EditId, setEditId] = useState()
+
+
+  let categoryAdd = (e) => {
+
+    // e.preventDefault();
+    // let createObj = { category_name: Categoryname, device_image: imageset }
+    // setParamValue([...Paramvalue, createObj])
+    // setCreateObject({ values: Paramvalue })
+    // console.log("Before", createObj)
+
+    let Finddeviceprofile = deviceprofile.find((value, i) => value.device_profile_name === device);
+
+    console.log("Finddeviceprofile", Finddeviceprofile)
+
+    let creatdevice = { deviceprofileId: Finddeviceprofile.device_profile_id, deviceprofileName: Finddeviceprofile.device_profile_name, deviceprofilecustomdata: Finddeviceprofile.custom_data }
+
+    console.log("creatdevice", creatdevice)
+
+    setdeviceprofileArray((deviceOlddata) => {
+      return [...deviceOlddata, creatdevice]
+    })
+
+    console.log("deviceprofileArray", deviceprofileArray)
+  }
+  let deviceprofileedit = (e) => {
+
+    setdeiveprofileTemp(e)
+
+    let Finddeviceprofile = deviceprofileArray.find((value) => value.deviceprofileName === e);
+
+    console.log("e", Finddeviceprofile);
+
+
+    // console.log("e",Finddeviceprofile);
+    setupdateddevice(false)
+  }
+
+  let updateDevice = () => {
+
+    console.log("device", device)
+
+    let Finddeviceprofile = deviceprofile.find((value) => value.device_profile_name === device);
+
+    console.log("findprofile", Finddeviceprofile)
+
+    setEditId(Finddeviceprofile.device_profile_id)
+    setdevice(Finddeviceprofile.deviceprofileName)
+
+    let setcreateObj = { deviceprofileId: Finddeviceprofile.device_profile_id, deviceprofileName: Finddeviceprofile.device_profile_name, deviceprofilecustomdata: Finddeviceprofile.custom_data }
+
+    console.log("creating", setcreateObj)
+
+    setdeviceprofileArray(deviceprofileArray.map((element) => {
+      // console.log("element",element.deviceprofileName)
+
+      if (element.deviceprofileName === deiveprofileTemp) {
+
+        console.log("element", element)
+        console.log("setcreateObj", setcreateObj)
+
+        return { ...element, deviceprofileId: Finddeviceprofile.device_profile_id, deviceprofileName: Finddeviceprofile.device_profile_name, deviceprofilecustomdata: Finddeviceprofile.custom_data }
+      }
+      console.log("sorry")
+      return element;
+    }))
+
+    console.log("element", deviceprofileArray)
+  }
+
+
+  useEffect(() => {
+
+    console.log("deviceprofileArray", deviceprofileArray);
+
+  }, [deviceprofileArray])
+  return (
+    <>
+      <Header />
+      <Container className="mt--6" fluid>
+        <h2 className=" text-center mb-4">
+          Add Device Category
+        </h2>
+        <Row>
+          <Col className="order-xl-1" xl="12">
+            <Card className="bg-secondary shadow">
+              <CardBody>
+                <Form>
+                  <div className="pl-lg-4">
+                    <Row>
+                      <Col md="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-address"
+                          >
+                            Upload Image
+                          </label>
+                          {/* <div class="dropzone dropzone-single" data-toggle="dropzone" data-dropzone-url="http://">
+                            <div class="fallback">
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" onChange={setonChangeImage} id="dropzoneBasicUpload" />
+                                <label class="custom-file-label" for="dropzoneBasicUpload">Choose file</label>
+                              </div>
+                            </div> 
+                             </div> */}
+
+                          <label for="exampleSelect">Icon name</label>
+                          <input type="file" onChange={setonChangeImage} className="form-control" placeholder='Enter the Icon name' id="Form" />
+
+                        </FormGroup>
+
+
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-city"
+                          >
+                            Category Name
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            onChange={e => setCategoryname(e.target.value)}
+                            value={Categoryname}
+                            id="input-city"
+                            placeholder=" Enter Category Name"
+                            type="text"
+
+                          />
+                        </FormGroup>
+
+                      </Col>
+
+                    </Row>
+                    <Row className='mt-3'>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            Device profile
+                          </label>
+                          <Input type="select" value={device} onChange={e => setdevice(e.target.value)} className='text-dark' name="select" id="exampleSelect">
+                            <option value="" selected disabled>Select Device Profile</option>
+                            {deviceprofile.map((item, index) => {
+                              return <option key={index} value={item.device_profile_name} className='text-dark'>{item.device_profile_name}</option>
+                            })
+                            }
+                          </Input>
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            Device Data Profile
+                          </label>
+                          <Input type="select" value={data} onChange={e => setdata(e.target.value)} className='text-dark' name="select" id="exampleSelect">
+                            <option value="" selected disabled>Select Device Data Profile</option>
+                            {devicedataprofile.map((item, index) => {
+                              return <option key={index} value={item.data_profile_name} className='text-dark'>{item.data_profile_name}</option>
+                            })
+                            }
+                          </Input>
+
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            Global Alarm Rules
+                          </label>
+                          <Input type="select" value={alarm} onChange={e => setalarm(e.target.value)} className='text-dark' name="select" id="exampleSelect">
+                            <option value="" selected disabled>Select Alarm</option>
+                            {alarmrule.map((item, index) => {
+                              return <option key={index} value={item.alarm_name} className='text-dark'>{item.alarm_name}</option>
+                            })
+                            }
+                          </Input>
+
+                        </FormGroup>
+                      </Col>
+                    </Row>
+
+                  </div>
+                </Form>
+                <div >
+                  <FormGroup>
+                    {
+                      deviceprofileArray.map((item, index1) => {
+                        return <div key={index1} class="row ml-3">
+
+                          <div class="col-md-2 mb-4">
+                            <div class="form-outline datepicker">
+                              <label for="exampleDatepicker1" class="form-label text-dark">{index1 + 1}</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4 mb-4">
+                            <div class="">
+                              <label for="exampleDatepicker1" class="form-label text-dark">{item.deviceprofileName}</label>
+                            </div>
+                          </div>
+
+                          <div class="col-md-1 mb-4">
+                            <div class="f">
+                              <button className='btn btn-primary btn-sm' onClick={() => deviceprofileedit(item.deviceprofileName)} >Edit</button>
+                            </div>
+                          </div>
+                          <div class="col-md-1 mb-4">
+                            <div class="form-outline datepicker">
+                              <button className='btn btn-danger btn-sm' >Delete</button>
+                            </div>
+                          </div>
+                        </div>
+                      })
+                    }
+                  </FormGroup>
+                </div>
+                <div >
+                  <Row className='ml-3'>
+                    <Col>
+                      {updateddevice ? <Button color="success" className='btn-warning' size="sm" onClick={categoryAdd}>Add</Button> : <Button color="success" className='btn-primary' size="sm" onClick={updateDevice}>update</Button>}
+                    </Col>
+                  </Row>
+                  <Row className='ml-3'>
+                    <Col>
+                      <Button color="success" className='btn-success float-right' size="sm">Submit</Button>
+                    </Col>
+                  </Row>
+                </div>
+
+
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  )
+}

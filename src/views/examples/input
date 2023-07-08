@@ -1,0 +1,147 @@
+import { useState } from "react";
+// react component that copies the given text inside your clipboard
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import AdminNavbar from "components/Navbars/AdminNavbar.js";
+import AdminFooter from "components/Footers/AdminFooter.js";
+// import Header from "components/Headers/Header.js";
+
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+// reactstrap components
+// import './Show.css';
+
+import {
+	Card,
+	CardHeader,
+	CardBody,
+	Container,
+	Row,
+	Col,
+	UncontrolledTooltip
+} from "reactstrap";
+import $ from "jquery";
+import AdminLayout from "layouts/Admin.js";
+// core components
+import Header from "components/Headers/Header.js";
+import "../examples/Test.css";
+const UserDetails = () => {
+	const [copiedText, setCopiedText] = useState();
+	$('.form-control').on('focus blur', function (e) {
+		$(this).parents('.form-group').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
+	}).trigger('blur');
+
+	return (
+		<>
+			<Header />
+			<Container className="mt-5" fluid>
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="my-5">
+								<h3 className="text-center " style={{ fontSize: "30px" }}>User Details</h3>
+								<hr />
+							</div>
+							<form class="file-upload">
+								<div class="row ">
+									<div class="col-xxl-8 ">
+										<div class="bg-secondary-soft  rounded">
+											<div class="row ">
+												<div class="col-md-6">
+													<label class="form-label">Organization Name *</label>
+													<input type="text" class="form-control" placeholder="" aria-label="First name" value="Scaralet" />
+												</div>
+												<div class="col-md-6">
+													<label class="form-label">User Name *</label>
+													<input type="text" class="form-control" placeholder="" aria-label="Last name" value="Doe" />
+												</div>
+												<div class="col-md-6">
+													<label class="form-label">Phone number *</label>
+													<input type="text" class="form-control" placeholder="" aria-label="Phone number" value="(333) 000 555" />
+												</div>
+												<div class="col-md-6">
+													<label for="inputEmail4" class="form-label">Email *</label>
+													<input type="email" class="form-control" id="inputEmail4" value="example@homerealty.com" />
+												</div>
+
+												<div class="col-md-6">
+													<label class="form-label">Address</label>
+													<input type="text-area" class="form-control" placeholder="" aria-label="Phone number" value="Scaralet D" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<div class="my-5">
+								<h3 className="text-center " style={{ fontSize: "30px" }}>Additional Information</h3>
+								<hr />
+							</div>
+							<form class="file-upload">
+								<div class="row ">
+									<div class="col-xxl-8 ">
+										<div class="bg-secondary-soft  rounded">
+											<div class="row ">
+												<div class="col-md-6">
+													<label class="form-label">Secondary Name  *</label>
+													<input type="text" class="form-control" placeholder="" aria-label="First name" value="Scaralet" />
+												</div>
+												<div class="col-md-6">
+													<label class="form-label">Secondary Phone number *</label>
+													<input type="text" class="form-control" placeholder="" aria-label="Last name" value="Doe" />
+												</div>
+												<div class="col-md-6">
+													<label class="form-label">Secondary Email *</label>
+													<input type="text" class="form-control" placeholder="" aria-label="Phone number" value="(333) 000 555" />
+												</div>
+												<div class="col-md-6">
+													<label for="inputEmail4" class="form-label">Secondary Address  *</label>
+													<input type="email" class="form-control" id="inputEmail4" value="example@homerealty.com" />
+												</div>
+
+												<div class="col-md-6 form-group">
+													<label class="form-control-placeholder">Secondary Email </label>
+													<input type="text-area" class="form-control" placeholder="" aria-label="Phone number" value="Scaralet D" />
+												</div>
+												Secondary Email 
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+				<div>
+					<div class="">
+						<div class="d-flex flex-lg-row flex-column-reverse">
+							<div class="">
+								<div class="row justify-content-center my-auto">
+									<div class="col-lg-8 my-5">
+										<div class="form-group mt-5">
+											<input type="text" id="name" class="form-control" required />
+												<label class="form-control-placeholder" for="name">Full Name</label>
+										</div>
+										<div class="form-group mt-4">
+											<input type="email" id="mail" class="form-control" required/>
+												<label class="form-control-placeholder" for="mail">Email</label>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</Container>
+		</>
+	);
+};
+
+export default UserDetails;

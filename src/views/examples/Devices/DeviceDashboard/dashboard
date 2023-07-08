@@ -1,0 +1,494 @@
+// // import Header from 'components/Headers/Header';
+// import React from 'react'
+
+// import { useState } from "react";
+// import {
+//   Badge,
+//   Card,
+//   CardFooter,
+//   DropdownMenu,
+//   DropdownItem,
+//   UncontrolledDropdown,
+//   DropdownToggle,
+//   Media,
+//   Pagination,
+//   PaginationItem,
+//   PaginationLink,
+
+//   Table,
+//   Container,
+//   Row,
+//   UncontrolledTooltip,
+//   Button,
+
+//   CardHeader,
+//   CardBody,
+//   NavItem,
+//   NavLink,
+//   Nav,
+//   Progress,
+//   Col,
+//   Form,
+//   FormGroup,
+//   InputGroupAddon,
+//   InputGroupText,
+//   Input,
+//   InputGroup,
+
+// } from "reactstrap";
+// import {
+//   chartOptions,
+//   parseOptions,
+//   chartExample1,
+//   chartExample2
+// } from "variables/charts.js";
+// import Chart from "chart.js";
+// // react plugin used to create charts
+// import { Line, Bar } from "react-chartjs-2";
+// import classnames from "classnames";
+// import { Link } from 'react-router-dom';
+// import Header from 'components/Headers/Header';
+// export default function DeviceDashboard() {
+//   const [activeNav, setActiveNav] = useState(1);
+//   const [chartExample1Data, setChartExample1Data] = useState("data1");
+
+//   if (window.Chart) {
+//     parseOptions(Chart, chartOptions());
+//   }
+
+//   const toggleNavs = (e, index) => {
+//     e.preventDefault();
+//     setActiveNav(index);
+//     setChartExample1Data("data" + index);
+//   };
+//   return (
+//     <>
+//       <Header />
+//       <Container className='mt--5'>
+//         <Card>
+//         <Row className='mt--5'>
+//           <Col md="4" style={{ height: "200px" }}>
+//             <Card className='table-scroll' >
+//               <CardHeader className='table-scroll-height'>
+          
+//                 <CardBody className='text-center' >
+//                   <Table className="align-items-center table-flush" style={{ padding: "0px", margin: "0px" }} responsive>
+//                     <thead className="thead-light">
+//                       <tr>
+//                         <th scope="col " className='text-dark text-justify'><b>Device Id</b></th>
+//                         <th scope="col" className='text-dark text-justify'><b>Action</b></th>
+//                       </tr>
+//                     </thead>
+//                     <tbody>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye text-success" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr> <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                       <tr className='text-dark text-justify'>
+//                         <td>123456867078</td>
+//                         <td>
+//                           <i class="fa fa-eye" aria-hidden="true"></i>
+//                         </td>
+//                       </tr>
+//                     </tbody>
+//                   </Table>
+//                 </CardBody>
+//               </CardHeader>
+//             </Card>
+//           </Col>
+
+//           <Col md="3">
+           
+//             <Card>
+        
+//               <CardHeader>
+//               <Table className='table-borderless'>
+               
+//                 <img class="text-center" src="https://picsum.photos/200" alt="" style={{ width: 'auto', objectFit: "cover" }} />
+//                 <div className="col text-left mt-3" style={{ padding: "0px" }}>
+//                   <div className="row">
+//                     <div class="col-6">
+//                       <th className='text-dark'><b>Device Name</b></th>
+//                     </div>
+//                     <div class="col-6 text-dark"  >
+//                    <td>Device1</td>
+//                     </div>
+//                   </div>
+//                 </div>
+//                 <div className="col text-left mt-3" style={{ padding: "0px" }}>
+//                   <div className="row">
+//                     <div class="col-6">
+//                       <th className='text-dark'><b>Device Category</b></th>
+//                     </div>
+//                     <div class="col-6 text-dark">
+//                        <td>Category</td>
+//                     </div>
+//                   </div>
+//                 </div>
+//                 </Table>
+//               </CardHeader>
+           
+//             </Card>
+            
+//           </Col>
+
+//           <Col md="5">
+//             <Card>
+//             <Row style={{margin:"0px", padding:"0px"}}>
+//               <Col md="6" style={{margin:"0px", padding:"0px"}}>
+//                 <FormGroup>
+//                   <label
+//                     className="form-control-label ml-3"
+//                     htmlFor="input-city"
+//                   >
+//                     Recent Alarm
+//                   </label>
+//                 </FormGroup>
+//               </Col>
+//             </Row>
+//             </Card>
+//             <hr style={{margin:"0px", padding:"0px"}}/>
+//             <Row >
+//               <Col md="11" className='table-scroll2' >
+//                 <Table className="align-items-center table-flush " style={{height:"20px"}} responsive>
+//                   <thead className="thead-light ">
+//                     <tr>
+//                       <th scope="col " className='text-dark'><b>Alarm Message</b></th>
+//                       <th scope="col" className='text-dark'><b>Value</b></th>
+//                       <th scope="col" className='text-dark'><b>Time</b></th>
+//                     </tr>
+//                   </thead>
+//                   <tbody>
+//                     <tr>
+//                       <td scope="row" className='text-dark'>Temperature is high</td>
+//                       <td className='text-dark'>45</td>
+//                       <td className='text-dark'>9:43:32</td>
+//                     </tr>
+//                     <tr>
+//                       <td scope="row" className='text-dark' >Temperature is high</td>
+//                       <td className='text-dark'>45</td>
+//                       <td className='text-dark'>9:43:32</td>
+//                     </tr>
+//                     <tr>
+//                       <td scope="row" className='text-dark'>Temperature is high</td>
+//                       <td className='text-dark'>45</td>
+//                       <td className='text-dark'>9:43:32</td>
+//                     </tr>
+//                     <tr>
+//                       <td scope="row" className='text-dark'>Temperature is high</td>
+//                       <td className='text-dark'>45</td>
+//                       <td className='text-dark'>9:43:32</td>
+//                     </tr>
+                    
+//                   </tbody>
+//                 </Table>
+//               </Col>
+//             </Row>
+//             <hr />
+//             <Row style={{margin:"0px", padding:"0px"}}>
+//               <Table className='table-borderless' >
+//               <Col md="9" style={{margin:"0px", padding:"0px"}}>
+//                 <div className="row " >
+//                   <div class="col-5">
+//                     <th className='text-dark'><b>Current Data</b></th>
+//                   </div>
+//                   <div class="col-7">
+//                   <td className='text-dark'>Last updated at 11:03:2023 & 8:43:12</td>
+//                   </div>
+//                 </div>
+//               </Col>
+//               </Table>
+//             </Row>
+//             <hr style={{margin:"0px", padding:"0px"}}/>
+//             <Row >
+//               <Table className='table-borderless'>
+//               <Col md="12">
+//               <div className="col text-left mt-3" style={{ padding: "0px" }}>
+//                   <div className="row">
+//                     <div class="col-4">
+//                       <th className='text-dark'><b>Thickness(mm)</b></th>
+//                     </div>
+//                     <div class="col-2">
+//                     <td className='text-dark'>65</td>
+//                     </div>
+//                     <div class="col-3">
+//                       <th className='text-dark'><b>Battery(%)</b></th>
+//                     </div>
+//                     <div class="col-3">
+//                     <td className='text-dark'>12</td>
+//                     </div>
+//                   </div>
+//                 </div>
+               
+//                 <div className="col text-left mt-3" style={{ padding: "0px" }}>
+//                   <div className="row">
+//                     <div class="col-4">
+//                     <th className='text-dark'><b>Temperature(C)</b></th>
+//                     </div>
+//                     <div class="col-2">
+//                     <td className='text-dark'>34</td>
+//                     </div>
+//                     <div class="col-3">
+//                     <th className='text-dark'><b>Humidity(RH)</b></th>
+//                     </div>
+//                     <div class="col-3">
+//                     <td className='text-dark'>11</td>
+//                     </div>
+//                   </div>
+//                 </div>
+//                 <div className="col text-left mt-3" style={{ padding: "0px" }}>
+//                   <div className="row">
+                  
+//                   </div>
+//                 </div>
+//               </Col>
+//               </Table>
+//             </Row>
+          
+//             <Row className='float-right mr-5'>
+//               <Col >
+//                 <Button color="success"  size="sm">Refresh</Button>
+//               </Col>
+//             </Row>
+        
+//           </Col>
+//           <Container className='mt-5'>
+//           <Row >
+//           <Col className="" md="12">
+//             <Card className="shadow ">
+//               <CardHeader className="">
+//                 <Row className="align-items-center">
+//                   <div className="col">
+//                   <Nav className="justify-content-end" pills>
+//                       <NavItem>
+//                         <NavLink
+//                           className={classnames("py-2 px-3", {
+//                             active: activeNav === 1
+//                           })}
+                        
+//                           onClick={(e) => toggleNavs(e, 1)}
+//                         >
+//                           <span className="d-none d-md-block">Month</span>
+//                           <span className="d-md-none">M</span>
+//                         </NavLink>
+//                       </NavItem>
+//                       <NavItem>
+//                         <NavLink
+//                           className={classnames("py-2 px-3", {
+//                             active: activeNav === 2
+//                           })}
+//                           data-toggle="tab"
+                       
+//                           onClick={(e) => toggleNavs(e, 2)}
+//                         >
+//                           <span className="d-none d-md-block">Week</span>
+//                           <span className="d-md-none">W</span>
+//                         </NavLink>
+//                       </NavItem>
+//                       <NavItem>
+//                         <NavLink
+//                           className={classnames("py-2 px-3", {
+//                             active: activeNav === 2
+//                           })}
+//                           data-toggle="tab"
+                         
+//                           onClick={(e) => toggleNavs(e, 2)}
+//                         >
+//                           <span className="d-none d-md-block">Days</span>
+//                           <span className="d-md-none">D</span>
+//                         </NavLink>
+//                       </NavItem>
+//                     </Nav>
+//                     <Col className="mt-5" xl="12">
+//             <Card className=" shadow">
+//               <CardHeader className="bg-transparent">
+//                 <Row className="align-items-center">
+//                   {/* <div className="col">
+//                     <h6 className="text-uppercase text-light ls-1 mb-1">
+//                       Overview
+//                     </h6>
+//                     <h2 className="text-white mb-0">Sales value</h2>
+//                   </div> */}
+//                   <div className="col">
+//                     <Nav className="justify-content-start" pills>
+//                       <NavItem>
+//                         <NavLink
+//                           className={classnames("py-2 px-3", {
+//                             active: activeNav === 1
+//                           })}
+//                           href="#pablo"
+//                           onClick={(e) => toggleNavs(e, 1)}
+//                         >
+//                           <span className="d-none d-md-block">Temperature</span>
+//                           <span className="d-md-none">M</span>
+//                         </NavLink>
+//                       </NavItem>
+//                       <NavItem>
+//                         <NavLink
+//                           className={classnames("py-2 px-3", {
+//                             active: activeNav === 2
+//                           })}
+//                           data-toggle="tab"
+//                           href="#pablo"
+//                           onClick={(e) => toggleNavs(e, 2)}
+//                         >
+//                           <span className="d-none d-md-block">Humidity</span>
+//                           <span className="d-md-none">W</span>
+//                         </NavLink>
+//                       </NavItem>
+//                       <NavItem>
+//                         <NavLink
+//                           className={classnames("py-2 px-3", {
+//                             active: activeNav === 2
+//                           })}
+//                           data-toggle="tab"
+//                           href="#pablo"
+//                           onClick={(e) => toggleNavs(e, 2)}
+//                         >
+//                           <span className="d-none d-md-block">Battery</span>
+//                           <span className="d-md-none">W</span>
+//                         </NavLink>
+//                       </NavItem>
+//                       <NavItem>
+//                         <NavLink
+//                           className={classnames("py-2 px-3", {
+//                             active: activeNav === 2
+//                           })}
+//                           data-toggle="tab"
+//                           href="#pablo"
+//                           onClick={(e) => toggleNavs(e, 2)}
+//                         >
+//                           <span className="d-none d-md-block">Thickness</span>
+//                           <span className="d-md-none">W</span>
+//                         </NavLink>
+//                       </NavItem>
+//                     </Nav>
+//                   </div>
+//                 </Row>
+//               </CardHeader>
+//               <CardBody>
+              
+//                 <div className="chart">
+//                   <Line
+//                     data={chartExample1[chartExample1Data]}
+//                     options={chartExample1.options}
+//                     getDatasetAtEvent={(e) => console.log(e)}
+//                   />
+//                 </div>
+//               </CardBody>
+//             </Card>
+//           </Col>
+//                   </div>
+//                 </Row>
+//               </CardHeader>
+//             </Card>
+//           </Col>
+//         </Row>
+//           </Container>
+          
+//         </Row>
+//         </Card>
+//       </Container>
+//     </>
+//   )
+// }
+
+
+

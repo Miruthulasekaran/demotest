@@ -1,0 +1,553 @@
+import {
+    Button,
+    Card,
+    CardHeader,
+    CardBody,
+    FormGroup,
+    Form,
+    Input,
+    Container,
+    Row,
+    Col,
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown,
+    DropdownToggle,
+    Modal, ModalHeader, ModalBody, ModalFooter, Label
+} from "reactstrap";
+import Header from 'components/Headers/Header';
+import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react'
+export default function DeviceDataProfileEdit() {
+    const [profile, setProfile] = useState("")
+    const [parameter, setParameter] = useState("")
+    const [Paramvalue, setParamValue] = useState([])
+    const [drpDwn, setDrpDwn] = useState("")
+    const [id, setid] = useState(0);
+    const [createObject, setCreateObject] = useState([])
+    const [OnChangeBtn, setOnBtnChange] = useState("1")
+    const [TempId, setTempId] = useState(null)
+    const [errorProfile, seterrorProfile] = useState(false)
+    const [errorparam, seterrorparam] = useState(false)
+    const [errordataType, seterrordataType] = useState(false)
+    const [Valuepresent, setValuepresent] = useState(false)
+    const [finalArr, setFinalArr] = useState()
+    const [Arr, setArr] = useState([])
+    const [idds, setId] = useState()
+    const [edit, setEdit] = useState([])
+    const [OnIcons, setOnIcons] = useState();
+    const [OnDataTypevalue, setOnDataTypevalue] = useState("");
+    const [OnUnits, setOnUnits] = useState();
+    const [OnDeviceDataProfile, setOnDeviceDataProfile] = useState();
+    const [OnProtocol, setOnProtocol] = useState();
+    const [Ondataformat, setOndataformat] = useState();
+    const [Onprofilename, setOnprofilename] = useState();
+    const [AddIcons, setAddIcons] = useState("");
+    const [idtest, setidtest] = useState(0)
+    // const[resp1,setresp]=useState()
+
+
+    const history = useHistory();
+    const [deviceprofileedit, setdeviceprofileedit] = useState([])
+    
+    useEffect(() => {
+        var url = window.location.pathname
+        var idds = url.substring(url.lastIndexOf('/') + 1);
+        setId(idds)
+        console.log("last one", idds)
+
+        fetch(`http://127.0.0.1:8088/api/v1/device-data-profile/${idds}`).then((result) => {
+            result.json().then((resp) => {
+                // movieparsed = JSON.parse(resp);
+                // setdeviceprofileedit([resp]);
+                // setresp(resp)
+                // console.log("response", resp.fields.DataType);
+                // {resp.fields.map((item)=>{
+                // return    console.log("resp",item.DataType)
+
+                // })
+
+                // }
+                console.log("respose test", resp)
+                setEdit(resp.custom_data);
+                setCreateArr(resp.icon_image)
+                setOndataformat(resp.data_format)
+                console.log("this is the iconname", resp)
+                // setOnIcons(resp.custom_data.IconName)
+                //                  console.log("edit", edit[0].DataType);
+
+                //                 setOnIcons(edit.AddIcons)
+                // setOnDataTypevalue(edit.DataType)
+                // setOnUnits(edit.Units)
+                // setOnDeviceDataProfile(edit.DataProfileFields);
+                // // setOnProtocol(resp.)
+                // // setOndataformat()
+                setOnprofilename(resp.data_profile_name)
+
+                // setProfile(resp.data_profile_name
+                //     )
+                // setArr(resp.fields)
+                // console.log("response array",Arr)
+
+            })
+        })
+    }, [])
+
+    useEffect(() => {
+        const unloadCallback = (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        };
+        window.addEventListener("beforeunload", unloadCallback);
+        return () => window.removeEventListener("beforeunload", unloadCallback);
+    }, []);
+
+    const [icons, seticons] = useState()
+    let editIconName = (e) => {
+        // e.preventDefault();
+        let editValue = OncreateArr.find((value) => value.IconName === e.target.value);
+        console.log("editValue", editValue)
+        setAddIcons(editValue.IconImage);
+        setIconName1(editValue.IconName);
+        console.log("editValue.IconImage", editValue.IconName)
+        // setplaceholdervalue(editValue.IconName);
+        // setAddIcons1(editValue.IconName)
+
+
+    }
+
+    let CancelAll = () => {
+        setOnDeviceDataProfile("")
+        setOnUnits("")
+        setOnDataTypevalue("")
+        setIconName1("")
+    }
+    let SetArray = () => {
+        setidtest(idtest + 1)
+        // console.log("id",idtest)
+        let CreateObj = { DataProfileFields: OnDeviceDataProfile, Units: OnUnits, DataType: OnDataTypevalue, AddIcons: AddIcons, IconName: IconName1 }
+        setEdit((values) => {
+            return [...values, CreateObj]
+        })
+        console.log("array", edit)
+        setOnDeviceDataProfile("")
+        setOnUnits("")
+        setOnDataTypevalue("")
+        setIconName1("")
+    }
+
+
+    let Ondelete = (e) => {
+        setEdit((edit) => {
+            return edit.filter((_, i) => i !== e);
+        });
+        setOnDeviceDataProfile("")
+        setOnUnits("")
+        setOnDataTypevalue("")
+        setIconName1("")
+
+    }
+
+
+    let OnEdit = (e) => {
+        // e.preventDefault();
+        let editValue = edit.find((value) => value.DataProfileFields === e);
+        console.log("editValue", editValue)
+        setOnDeviceDataProfile(editValue.DataProfileFields)
+        setOnUnits(editValue.Units)
+        setOnDataTypevalue(editValue.DataType)
+        setOnIcons(editValue.IconName)
+        setIconName1(editValue.AddIcons)
+
+    }
+
+    let backendData = () => {
+
+        fetch(`http://127.0.0.1:8088/api/v1/edit-device-data-profile/${idds}`, {
+            method: 'PATCH',
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(finalArr)
+        }).then((result) => {
+            result.json().then((resp) => {
+                console.log("idds", idds);
+                console.log("resp", resp);
+                // navigate('/OrganizationProfile');
+                // history('/OrganizationProfile');
+                history.push('/admin/DeviceProfile');
+
+            })
+        })
+    }
+    const [DataProfile, setDataProfile] = useState("");
+
+    const [DataType, setDataType] = useState("");
+
+    const [AllValues, setAllValues] = useState([]);
+
+    const [iconname, seticonname] = useState("");
+    const [iconimg, seticonimg] = useState("")
+    const [OncreateArr, setCreateArr] = useState([]);
+    const [updateimg, setupdateimg] = useState(1)
+
+    const [TempModel, setTempModel] = useState(1)
+    const [IconName1, setIconName1] = useState("");
+
+
+
+    const [modal, setmodal] = useState(false)
+
+
+    let toggle = () => {
+
+        seticonimg("")
+        seticonname("")
+        setmodal(!modal);
+    }
+
+
+    useEffect(() => {
+        const unloadCallback = (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        };
+
+        window.addEventListener("beforeunload", unloadCallback);
+        return () => window.removeEventListener("beforeunload", unloadCallback);
+    }, []);
+
+
+
+    let EditModalFn = (e) => {
+        let editValue = OncreateArr.find((value, i) => value.IconName === e);
+        console.log('EditValue', editValue)
+        seticonname(editValue.IconName)
+        setTempModel(editValue.IconName)
+        setupdateimg(2)
+    }
+    let DeleteModalFn = (e) => {
+        setCreateArr((OncreateArr) => {
+
+            return OncreateArr.filter((_, i) => {
+                { console.log("Delete", i) }
+                return i !== e
+            });
+        });
+        console.log('Delete', e);
+    }
+
+
+
+    let UpdateArr1 = () => {
+        setupdateimg(1)
+        seticonname("")
+        seticonimg("")
+    }
+    let UpdateArr = () => {
+        setCreateArr(OncreateArr.map((element) => {
+            if (element.IconName === TempModel) {
+                return { ...element, IconName: iconname, IconImage: iconimg }
+            }
+            return element;
+        }))
+        setupdateimg(1)
+        seticonname("")
+        seticonimg("")
+    }
+    let Oniconname = (e) => {
+        seticonname(e.target.value)
+    }
+    let Oniconimage = (e) => {
+        console.log("iconimage", e.target.value)
+        // seticonimg(e.target.file)
+        seticonimg(URL.createObjectURL(e.target.files[0]))
+    };
+    let createArr = () => {
+        seticonname("")
+        let CreateObjs = { IconName: iconname, IconImage: iconimg }
+
+        setCreateArr([...OncreateArr, CreateObjs])
+        console.log(OncreateArr)
+    }
+
+
+    return (
+        <>
+            <div>
+                <Modal size="lg" isOpen={modal} toggle={toggle} >
+                    <ModalHeader toggle={toggle}>Add Icons</ModalHeader>
+                    <ModalBody>
+                        <div className="row">
+                            <div className="col-md-4">
+                                {updateimg == 1 ? <Label for="exampleSelect">Icon name</Label> : updateimg == 2 ? <Label for="exampleSelect">Update Icon name</Label> : null}
+                                <input type="text" onChange={Oniconname} value={iconname} className="form-control" placeholder='Enter the Icon name' id="Form" />
+                            </div>
+                            <div className="col-md-6">
+                                {updateimg == 1 ? <Label for="exampleSelect">Select Icon</Label> : updateimg == 2 ? <Label for="exampleSelect">Update Icon</Label> : null}
+                                {updateimg == 1 ?
+                                    <input onChange={Oniconimage} type="file" className="form-control" placeholder='Select the Icon' id="Form1" /> :
+                                    updateimg == 2 ? <input onChange={Oniconimage} type="file" className="form-control" placeholder='Update the Icon' id="Form1" /> : null
+                                }
+                            </div>
+                            <div className="col-md-2">
+                                {updateimg == 1 ? <Button variant="primary" onClick={createArr} className="mt-4">
+                                    Add
+                                </Button> : updateimg == 2 ? <> <Button variant="primary" onClick={UpdateArr} className="mt-1 btn btn-sm btn-success">
+                                    Update
+                                </Button>  <Button variant="danger" onClick={UpdateArr1} className="mt-1 btn btn-sm btn-danger">
+                                        cancel
+                                    </Button> </> : null
+                                }
+                            </div>
+                        </div>
+                        <div className="row mt-3">
+                            <div className="col-md-12">
+                                {OncreateArr.map((item, index) => {
+                                    return <div className="row" key={index}>
+                                        <div className="col-md-1">
+                                            <p> {index + 1}</p>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <p> {item.IconName}</p>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <img style={{ height: "2rem" }} src={item.IconImage} />
+                                        </div>
+                                        <div className="col-md-2">
+                                            <button className='btn btn-primary btn-sm' onClick={() => EditModalFn(item.IconName)} >Edit</button>
+                                        </div>
+                                        <div className="col-md-2">
+                                            <button className='btn btn-danger btn-sm' onClick={() => DeleteModalFn(index)}>Delete</button>
+                                        </div>
+                                    </div>
+                                })
+                                }
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={toggle}>save</Button>{' '}
+                        <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+            </div>
+            <Header />
+            <Container className="mt--6" fluid>
+                {/* <h2 className=" text-center mb-4">
+                    Edit Device Data Profile
+                </h2> */}
+                <Row>
+                    <Col className="order-xl-1" xl="12">
+                        <Card className="bg-secondary shadow">
+                            <CardBody>
+                                <Form>
+                                    <div className="pl-lg-4">
+                                        <Row>
+                                            <Col md="5">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-address"
+                                                    >
+                                                        Profile Name
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        value={Onprofilename}
+                                                        onChange={e => setOnprofilename(e.target.value)}
+                                                        id="input-address"
+                                                        placeholder="Enter Profile Name"
+                                                        type="text"
+
+                                                    />
+
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md="5">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-country"
+                                                    >
+                                                        DataFormat
+                                                    </label>
+                                                    <Input value={Ondataformat} onChange={e => setOndataformat(e.target.value)} type="select" className='text-dark' name="select" id="exampleSelect">
+                                                        <option value="" selected disabled>Select Data Format</option>
+                                                        <option value="number" className='text-dark'>JSON</option>
+                                                        <option value="email" className='text-dark'>CSV</option>
+
+                                                    </Input>
+
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md="2">
+                                                <Button color="success" size="sm" className="mt-4" onClick={toggle}>Add Icons</Button>
+                                            </Col>
+                                        </Row>
+                                        <Row className='mt-5'>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-city"
+                                                    >
+                                                        Add Device Data Profile Fields
+                                                    </label>
+                                                    <Input
+                                                        className="form-control-alternative"
+                                                        value={OnDeviceDataProfile}
+                                                        // onChange={()=>{setOnDeviceDataProfile(e.target.value)}}
+                                                        onChange={e => setOnDeviceDataProfile(e.target.value)}
+                                                        id="input-city"
+                                                        placeholder="Custom Parameter"
+                                                        type="text"
+                                                    />
+                                                </FormGroup>
+
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-country"
+                                                    >
+                                                        Add Units
+                                                    </label>
+                                                    <Input type="text" placeholder="Please add Units" onChange={e => setOnUnits(e.target.value)} value={OnUnits} className='text-dark' name="select" id="exampleSelect">
+                                                        {/* {OncreateArr.map((item, index) => {
+                                                        console.log("OncreateArr",OncreateArr)
+                                                            return <option key={index} value={item.IconImage}>{item.IconName} </option>
+                                                        })
+                                                        } */}
+                                                    </Input>
+
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row className='mt-5'>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-country"
+                                                    >
+                                                        Add Data Types
+                                                    </label>
+                                                    <Input type="select" onChange={e => setOnDataTypevalue(e.target.value)} className='text-dark' value={OnDataTypevalue} name="select" id="exampleSelect">
+                                                        <option value="" selected disabled>Select Data Type</option>
+                                                        <option value="number" className='text-dark'>number</option>
+                                                        <option value="text" className='text-dark'>text</option>
+                                                        <option value="email" className='text-dark'>email</option>
+                                                    </Input>
+
+                                                </FormGroup>
+                                            </Col>
+                                            <Col lg="6">
+                                                <FormGroup>
+                                                    <label
+                                                        className="form-control-label"
+                                                        htmlFor="input-country"
+                                                    >
+                                                        Add Icons
+                                                    </label>
+
+                                                    <Input type="select" value={IconName1} onChange={editIconName} className='text-dark' name="select" id="exampleSelect">
+                                                        <option value="" selected disabled>Select Icons</option>
+                                                        {OncreateArr.map((item, index) => {
+                                                            return <option key={index} value={item.IconName}>{item.IconName} </option>
+                                                        })
+                                                        }
+                                                    </Input>
+
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Form>
+                                <div >
+                                    <Row className='ml-3 mb-5'>
+                                        <Col>
+
+                                            <Button color="success" size="sm" onClick={SetArray}>Add</Button>
+                                            <Button color="danger" size="sm" onClick={CancelAll}>Cancel</Button>
+
+                                        </Col>
+                                        <Col style={{ textAlign: "right" }}>
+                                            <Button color="success" size="sm" >Save</Button>
+                                            {/* <Button color="danger" size="sm">Cancel</Button> */}
+
+                                        </Col>
+                                    </Row>
+
+                                </div>
+                                {
+                                    edit.map((item, index1) => {
+                                        return <div key={index1} class="row">
+                                            <div class="col-md-1 mb-4">
+                                                <div class="form-outline datepicker">
+                                                    <label for="exampleDatepicker1" class="form-label">{index1 + 1}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 mb-4">
+                                                <div class="form-outline datepicker">
+                                                    <label for="exampleDatepicker1" class="form-label">{item.DataProfileFields}</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 mb-4">
+                                                <div class="form-outline datepicker">
+
+                                                    <label for="exampleDatepicker1" class="form-label">{item.Units}</label>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-2 mb-4">
+                                                <div class="form-outline datepicker">
+
+                                                    <label for="exampleDatepicker1" class="form-label">{item.DataType}</label>
+                                                </div>
+
+
+                                            </div>
+                                            {/* <div class="col-md-1 mb-4">
+                                                            <div class="form-outline datepicker">
+
+                                                                <label for="exampleDatepicker1" class="form-label">{item.DataFormat}</label>
+                                                            </div>
+
+
+                                                        </div> */}
+                                            <div class="col-md-2 mb-4">
+                                                <div class="form-outline datepicker">
+                                                    <img style={{ height: "2rem" }} for="exampleDatepicker1" src={item.AddIcons} class="zoom"></img>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 mb-4">
+                                                <div class="form-outline datepicker">
+                                                    {/* let editValue = Arr.find((value) => value.parameter === e); */}
+                                                    <button className='btn btn-primary btn-sm' onClick={(e) => OnEdit(item.DataProfileFields)} >Edit</button>
+                                                    {/* <button className='btn btn-primary btn-sm' onClick={(e) => OnEdit(item.parameter)}>Edit</button> */}
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-1 mb-4">
+                                                <div class="form-outline datepicker">
+                                                    {/* <button className='btn btn-danger btn-sm'  >Delete</button> */}
+                                                    <button className='btn btn-danger btn-sm' onClick={(e) => Ondelete(index1)}>Delete</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    })
+                                }
+
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    )
+}
